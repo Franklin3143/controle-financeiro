@@ -1,6 +1,8 @@
 package br.com.controlefinanceiroback.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,9 +11,12 @@ import java.util.Date;
 public class Despesas {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDespesas;
-    private String origemDespesa;
-    private Date dataDespesa;
+    private String categoria;
+    private Boolean situacao;
+    private Date dataVencimentoDespesa;
+    private Date dataOrigemDespesa;
     private BigDecimal valorDespesa;
 
     public Long getIdDespesas() {
@@ -22,20 +27,36 @@ public class Despesas {
         this.idDespesas = idDespesas;
     }
 
-    public String getOrigemDespesa() {
-        return origemDespesa;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setOrigemDespesa(String origemDespesa) {
-        this.origemDespesa = origemDespesa;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public Date getDataDespesa() {
-        return dataDespesa;
+    public Boolean getSituacao() {
+        return situacao;
     }
 
-    public void setDataDespesa(Date dataDespesa) {
-        this.dataDespesa = dataDespesa;
+    public void setSituacao(Boolean situacao) {
+        this.situacao = situacao;
+    }
+
+    public Date getDataVencimentoDespesa() {
+        return dataVencimentoDespesa;
+    }
+
+    public void setDataVencimentoDespesa(Date dataVencimentoDespesa) {
+        this.dataVencimentoDespesa = dataVencimentoDespesa;
+    }
+
+    public Date getDataOrigemDespesa() {
+        return dataOrigemDespesa;
+    }
+
+    public void setDataOrigemDespesa(Date dataOrigemDespesa) {
+        this.dataOrigemDespesa = dataOrigemDespesa;
     }
 
     public BigDecimal getValorDespesa() {
