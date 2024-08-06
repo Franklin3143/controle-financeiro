@@ -1,4 +1,4 @@
-package br.com.controlefinanceiroback;
+package br.com.controle_financeiro_back;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
