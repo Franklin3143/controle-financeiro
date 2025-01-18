@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-transaction',
-  imports: [],
   templateUrl: './transaction.component.html',
-  styleUrl: './transaction.component.css'
+  styleUrls: ['./transaction.component.css']
 })
-export class TransactionComponent {
+export class TransactionComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'description', 'value', 'type', 'date'];
+  dataSource: any[] = []; // Inicializado como array vazio
 
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.apiService.getTransactions().subscribe({
+      next: (data) => {
+        this.dataSource = data; // Recebe os dados do backend
+      },
+      error: (err) => {
+        console.error('Erro ao carregar transações:', err);
+      }
+    });
+  }
 }
