@@ -1,30 +1,31 @@
 package br.com.controlefinanceiroback.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String description;
+    private String descricao; // Breve descrição da transação
+    private BigDecimal valor; // Valor da transação
+    private LocalDate data; // Data da transação
+    private TipoTransacao tipo; // ENUM (RECEITA ou DESPESA)
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal value;
+    @ManyToOne
+    private Categoria categoria; // Categoria vinculada à transação
 
-    @Column(nullable = false)
-    private String type; // Receita ou Despesa
+    @ManyToOne
+    private Usuario usuario; // Usuário dono da transação
 
-    @Column(nullable = false)
-    private LocalDate date;
+
+    private boolean pago; // Indica se a despesa foi paga ou não
+
 
     public Long getId() {
         return id;
@@ -34,35 +35,60 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getValor() {
+        return valor;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
-    public String getType() {
-        return type;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public TipoTransacao getTipo() {
+        return tipo;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setTipo(TipoTransacao tipo) {
+        this.tipo = tipo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 }
+
