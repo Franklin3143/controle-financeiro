@@ -1,5 +1,7 @@
 package br.com.controlefinanceiroback.entity;
 
+import br.com.controlefinanceiroback.entity.dto.TransactionDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -17,6 +19,7 @@ public class Transaction {
     private LocalDate data; // Data da transação
     private TipoTransacao tipo; // ENUM (RECEITA ou DESPESA)
 
+
     @ManyToOne
     private Categoria categoria; // Categoria vinculada à transação
 
@@ -25,6 +28,16 @@ public class Transaction {
 
 
     private boolean pago; // Indica se a despesa foi paga ou não
+
+    public void atualizarComDTO(TransactionDTO dto, Categoria categoria, Usuario usuario) {
+        this.descricao = dto.getDescricao();
+        this.valor = dto.getValor();
+        this.data = dto.getData();
+        this.tipo = dto.getTipo();
+        this.categoria = categoria;
+        this.usuario = usuario;
+    }
+
 
 
     public Long getId() {

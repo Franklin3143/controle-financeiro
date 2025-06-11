@@ -1,5 +1,6 @@
 package br.com.controlefinanceiroback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
