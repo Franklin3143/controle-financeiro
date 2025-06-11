@@ -1,19 +1,20 @@
 package br.com.controlefinanceiroback.service;
 
 import br.com.controlefinanceiroback.entity.Categoria;
+import br.com.controlefinanceiroback.entity.TipoTransacao;
 import br.com.controlefinanceiroback.entity.Transaction;
 import br.com.controlefinanceiroback.entity.Usuario;
-import br.com.controlefinanceiroback.entity.dto.CategoriaResumoDTO;
-import br.com.controlefinanceiroback.entity.dto.TransactionDTO;
-import br.com.controlefinanceiroback.entity.dto.TransactionResponseDTO;
-import br.com.controlefinanceiroback.entity.dto.UsuarioResumoDTO;
+import br.com.controlefinanceiroback.entity.dto.*;
 import br.com.controlefinanceiroback.repository.CategoriaRepository;
 import br.com.controlefinanceiroback.repository.TransactionRepository;
 import br.com.controlefinanceiroback.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,39 @@ public class TransactionService {
 
         return transacoes.stream().map(this::toDTO).collect(Collectors.toList());
     }
+
+    public ResumoMensalDTO obterResumoMensal(int mes, int ano) {
+        BigDecimal receitas = transactionRepository.somarPorTipoPeriodo(TipoTransacao.RECEITA, mes, ano);
+        BigDecimal despesas = transactionRepository.somarPorTipoPeriodo(TipoTransacao.DESPESA, mes, ano);
+        BigDecimal saldo = receitas.subtract(despesas);
+
+        return new ResumoMensalDTO(receitas, despesas, saldo);
+    }
+
+    public EvolucaoFinanceiraDTO obterEvolucaoFinanceira(int ano) {
+        Map<Integer, BigDecimal> saldoPorMes = new HashMap<>();
+
+        for (int mes = 1; mes <= 12; mes++) {
+            BigDecimal receitas = transactionRepository.somarPorTipoPeriodo(TipoTransacao.RECEITA, mes, ano);
+            BigDecimal despesas = transactionRepository.somarPorTipoPeriodo(TipoTransacao.DESPESA, mes, ano);
+
+            // Garantir que não sejam nulos
+            receitas = (receitas != null) ? receitas : BigDecimal.ZERO;
+            despesas = (despesas != null) ? despesas : BigDecimal.ZERO;
+
+            saldoPorMes.put(mes, receitas.subtract(despesas));
+        }
+
+        return new EvolucaoFinanceiraDTO(saldoPorMes);
+    }
+
+
+    public List<GastosPorCategoriaDTO> obterGastosPorCategoria(int mes, int ano) {
+        return transactionRepository.somarGastosPorCategoria(mes, ano);
+    }
+
+
+
 
     public TransactionResponseDTO toDTO(Transaction t) {
         TransactionResponseDTO dto = new TransactionResponseDTO();

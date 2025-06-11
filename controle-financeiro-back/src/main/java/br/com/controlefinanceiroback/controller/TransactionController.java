@@ -1,8 +1,7 @@
 package br.com.controlefinanceiroback.controller;
 
 import br.com.controlefinanceiroback.entity.Transaction;
-import br.com.controlefinanceiroback.entity.dto.TransactionDTO;
-import br.com.controlefinanceiroback.entity.dto.TransactionResponseDTO;
+import br.com.controlefinanceiroback.entity.dto.*;
 import br.com.controlefinanceiroback.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -79,6 +78,24 @@ public class TransactionController {
         List<TransactionResponseDTO> responseDTOs = transacaoService.listarTransacoesPorPeriodo(mes, ano);
         return ResponseEntity.ok(responseDTOs);
     }
+
+    @GetMapping("/resumo")
+    public ResponseEntity<ResumoMensalDTO> obterResumo(@RequestParam int mes, @RequestParam int ano) {
+        return ResponseEntity.ok(transacaoService.obterResumoMensal(mes, ano));
+    }
+
+    @GetMapping("/evolucao")
+    public ResponseEntity<EvolucaoFinanceiraDTO> obterEvolucao(@RequestParam int ano) {
+        return ResponseEntity.ok(transacaoService.obterEvolucaoFinanceira(ano));
+    }
+
+    @GetMapping("/gastos-por-categoria")
+    public ResponseEntity<List<GastosPorCategoriaDTO>> obterGastosPorCategoria(@RequestParam int mes, @RequestParam int ano) {
+        return ResponseEntity.ok(transacaoService.obterGastosPorCategoria(mes, ano));
+    }
+
+
+
 
 }
 
