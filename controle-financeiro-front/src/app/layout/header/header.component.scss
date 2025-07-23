@@ -1,0 +1,11 @@
+.app-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color, #3f51b5);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

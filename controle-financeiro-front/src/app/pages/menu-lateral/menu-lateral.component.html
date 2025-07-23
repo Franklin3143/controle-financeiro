@@ -1,0 +1,7 @@
+<p-button icon="pi pi-bars" label="Menu" (onClick)="visible = true"></p-button>
+
+<p-sidebar [(visible)]="visible" position="left" [dismissible]="false">
+  <p-panelMenu [model]="items" [style]="{ width: '100%' }"></p-panelMenu>
+</p-sidebar>
+
+

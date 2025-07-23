@@ -1,0 +1,38 @@
+<p-button label="Nova Transação" icon="pi pi-plus" (onClick)="abrirDialog()" />
+
+<p-dialog header="Nova Transação" [(visible)]="visible" [modal]="true" [style]="{ width: '30rem' }">
+  <div class="form-group">
+    <label>Descrição</label>
+    <input pInputText [(ngModel)]="descricao" />
+  </div>
+
+  <div class="form-group">
+    <label>Valor</label>
+    <input pInputText type="number" [(ngModel)]="valor" />
+  </div>
+
+  <div class="form-group">
+    <label>Data</label>
+    <p-calendar [(ngModel)]="data" dateFormat="yy-mm-dd" />
+  </div>
+
+  <div class="form-group">
+    <label>Tipo</label>
+    <p-dropdown [options]="['RECEITA', 'DESPESA']" [(ngModel)]="tipo" />
+  </div>
+
+  <div class="form-group">
+    <label>Categoria</label>
+    <p-dropdown [options]="categorias" optionLabel="nome" [(ngModel)]="categoriaSelecionada" />
+  </div>
+
+  <div class="form-group">
+    <label>Usuário</label>
+    <p-dropdown [options]="usuarios" optionLabel="nome" [(ngModel)]="usuarioSelecionado" />
+  </div>
+
+  <div class="dialog-footer">
+    <p-button label="Cancelar" severity="secondary" (onClick)="visible = false" />
+    <p-button label="Salvar" (onClick)="salvar()" />
+  </div>
+</p-dialog>
