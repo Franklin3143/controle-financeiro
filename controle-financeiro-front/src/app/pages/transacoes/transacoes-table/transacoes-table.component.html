@@ -1,0 +1,23 @@
+<app-transacao-form (transacaoSalva)="carregarTransacoes()"/>
+<p-table [value]="transacoes" [paginator]="true" [rows]="10" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Descrição</th>
+      <th>Valor</th>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Categoria</th>
+      <th>Usuário</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-transacao>
+    <tr>
+      <td>{{ transacao.descricao }}</td>
+      <td>{{ transacao.valor | currency:'BRL' }}</td>
+      <td>{{ transacao.data }}</td>
+      <td>{{ transacao.tipo }}</td>
+      <td>{{ transacao.categoria?.nome }}</td>
+      <td>{{ transacao.usuario?.nome }}</td>
+    </tr>
+  </ng-template>
+</p-table>
