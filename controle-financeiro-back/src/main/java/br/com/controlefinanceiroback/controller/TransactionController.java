@@ -44,7 +44,6 @@ public class TransactionController {
     }
 
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         transacaoService.deletar(id);
@@ -64,7 +63,6 @@ public class TransactionController {
         TransactionResponseDTO responseDTO = transacaoService.toDTO(transacao);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
-
 
 
     @GetMapping("/usuario/{usuarioId}")
@@ -94,8 +92,6 @@ public class TransactionController {
     public ResponseEntity<List<GastosPorCategoriaDTO>> obterGastosPorCategoria(@RequestParam int mes, @RequestParam int ano) {
         return ResponseEntity.ok(transacaoService.obterGastosPorCategoria(mes, ano));
     }
-
-
 
 
 }

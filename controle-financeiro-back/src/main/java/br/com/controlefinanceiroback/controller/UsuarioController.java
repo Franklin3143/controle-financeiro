@@ -1,7 +1,6 @@
 package br.com.controlefinanceiroback.controller;
 
 import br.com.controlefinanceiroback.entity.Usuario;
-import br.com.controlefinanceiroback.entity.dto.TransactionResponseDTO;
 import br.com.controlefinanceiroback.entity.dto.UsuarioDTO;
 import br.com.controlefinanceiroback.entity.dto.UsuarioResumoDTO;
 import br.com.controlefinanceiroback.service.UsuarioService;

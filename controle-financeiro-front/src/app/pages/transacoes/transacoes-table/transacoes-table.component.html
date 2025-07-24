@@ -23,13 +23,26 @@
       <td>{{ transacao.usuario?.nome }}</td>
       <td>
         <button
+          icon="pi pi-trash"
           pButton
           type="button"
-          class="p-button-danger p-button-sm pi pi-trash"
+          class="p-button-danger p-button-sm"
           (click)="confirmarExclusao(transacao.id)">
         </button>
-
+        <button
+          icon="pi pi-pencil"
+          pButton
+          type="button"
+          class="p-button-info p-button-sm"
+          (click)="editarTransacao(transacao.id)">
+        </button>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<app-transacao-edicao-form *ngIf="mostrarFormulario"
+                           [transacaoId]="transacaoSelecionadaId!"
+                           (aoAtualizar)="atualizacaoConcluida()">
+</app-transacao-edicao-form>
+

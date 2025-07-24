@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { Transacao } from '../../../models/transacao.model';
-import {CurrencyPipe} from '@angular/common';
+import {CommonModule, CurrencyPipe} from '@angular/common';
 import {TransacaoFormComponent} from '../transacao-form/transacao-form.component';
 import {TransacaoService} from '../../../service/transacaoService';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToastModule} from 'primeng/toast';
+import {ButtonDirective} from 'primeng/button';
+import {TransacaoEdicaoFormComponent} from '../transacao-edicao-form/transacao-edicao-form.component';
 
 @Component({
   selector: 'app-transacoes-table',
   standalone: true,
-  imports: [TableModule, CurrencyPipe, TransacaoFormComponent, ConfirmDialogModule, ToastModule],
+  imports: [TableModule, CurrencyPipe, TransacaoFormComponent, ConfirmDialogModule, ToastModule, ButtonDirective, TransacaoEdicaoFormComponent, CommonModule],
   templateUrl: './transacoes-table.component.html',
   styleUrls: ['./transacoes-table.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
 export class TransacoesTableComponent implements OnInit {
   transacoes: Transacao[] = [];
+  transacaoSelecionadaId?: number;
+  mostrarFormulario = false;
+
 
   constructor(private transacaoService: TransacaoService,
               private messageService: MessageService,
@@ -30,7 +35,7 @@ export class TransacoesTableComponent implements OnInit {
   carregarTransacoes(): void {
     this.transacaoService.listar().subscribe({
       next: (transacoes: Transacao[]) => {
-        this.transacoes = transacoes; // ✅ Aqui você armazena os dados recebidos
+        this.transacoes = transacoes;
       },
       error: () => {
         this.messageService.add({
@@ -51,7 +56,7 @@ export class TransacoesTableComponent implements OnInit {
           summary: 'Sucesso',
           detail: 'Transação excluída com sucesso',
           life: 3000 });
-        this.carregarTransacoes(); // Atualiza a lista após exclusão
+        this.carregarTransacoes();
       },
       error: () => {
         this.messageService.add({
@@ -63,6 +68,17 @@ export class TransacoesTableComponent implements OnInit {
     });
 
   }
+
+  editarTransacao(id: number): void {
+    this.transacaoSelecionadaId = id;
+    this.mostrarFormulario = true;
+  }
+
+  atualizacaoConcluida(): void {
+    this.mostrarFormulario = false;
+    this.carregarTransacoes(); // ou qualquer método que atualize a tabela
+  }
+
 
   confirmarExclusao(id: number): void {
     this.confirmationService.confirm({

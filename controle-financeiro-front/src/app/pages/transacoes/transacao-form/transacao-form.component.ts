@@ -45,13 +45,11 @@ export class TransacaoFormComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Categoria[]>('http://localhost:8080/categorias')
       .subscribe(data => {
-        console.log(data)
         this.categorias = data
       });
 
     this.http.get<Usuario[]>('http://localhost:8080/usuarios')
       .subscribe(data => {
-        console.log(data)
         this.usuarios = data
       });
   }

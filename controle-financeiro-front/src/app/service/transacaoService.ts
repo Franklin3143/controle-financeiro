@@ -16,6 +16,12 @@ export class TransacaoService {
     return this.http.get<Transacao[]>(`${this.apiUrl}/transacoes`);
   }
 
+  getTransacaoId(id: number): Observable<Transacao> {
+    return this.http.get<Transacao>(`${this.apiUrl}/transacoes/${id}`);
+
+  }
+
+
   // 💾 Salvar nova transação
   salvar(transacao: Transacao): Observable<Transacao> {
     return this.http.post<Transacao>(`${this.apiUrl}/transacoes`, transacao);
@@ -27,7 +33,7 @@ export class TransacaoService {
   }
 
   // ✏️ Atualizar transação (opcional)
-  atualizar(transacao: Transacao): Observable<Transacao> {
+  atualizarTransacao(transacao: Transacao): Observable<Transacao> {
     return this.http.put<Transacao>(`${this.apiUrl}/transacoes/${transacao.id}`, transacao);
   }
 }
